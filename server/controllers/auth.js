@@ -37,7 +37,7 @@ export const register = tryCatch(async (req, res) => {
 
 export const login = tryCatch(async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select('+password');
   if (!user) throw new BadRequestError('Пользователь не найден или не существует');
 
   const isPasswordMatch = await bcrypt.compare(password, user.password);

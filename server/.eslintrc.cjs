@@ -12,6 +12,11 @@ module.exports = {
   },
   rules: {
     'no-underscore-dangle': ['error', { allow: ['__dirname', '__filename', '_id'] }],
+    'no-unused-vars': ['warn', {
+      vars: 'all',
+      args: 'after-used',
+      argsIgnorePattern: '^(req|res|next)$',
+    }],
     'import/extensions': 'off',
   },
 };

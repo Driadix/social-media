@@ -26,6 +26,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: [3, 'Длина поля должна составлять минимум 2 символа, получена строка {VALUE}'],
+      select: false,
     },
     imageLink: {
       type: String,
@@ -34,7 +35,11 @@ const UserSchema = new mongoose.Schema(
       validate: URL_REGEX,
     },
     friendsList: {
-      type: Array,
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId, ref: 'user',
+        },
+      ],
       default: [],
     },
     address: {
@@ -55,6 +60,6 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true, versionKey: false },
 );
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('user', UserSchema);
 
 export default User;
