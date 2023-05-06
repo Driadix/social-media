@@ -43,7 +43,7 @@ export const login = tryCatch(async (req, res) => {
   const isPasswordMatch = await bcrypt.compare(password, user.password);
   if (!isPasswordMatch) throw new UnauthorizedError('Введены неверные учётные данные');
 
-  const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1d' });
+  const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
   const userObject = user.toObject();
   delete userObject.password;
   res.status(200).send({ token, user: userObject });
