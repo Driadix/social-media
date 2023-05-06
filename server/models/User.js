@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { URL_REGEX, EMAIL_REGEXP } from '../utils/constants.js';
+import { IMAGE_REGEX, EMAIL_REGEXP } from '../utils/constants.js';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -25,14 +25,14 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minlength: [3, 'Длина поля должна составлять минимум 2 символа, получена строка {VALUE}'],
+      minlength: [3, 'Длина поля должна составлять минимум 3 символа, получена строка {VALUE}'],
       select: false,
     },
     imageLink: {
       type: String,
       required: true,
       default: '',
-      validate: URL_REGEX,
+      validate: IMAGE_REGEX,
     },
     friendsList: {
       type: [

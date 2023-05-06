@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { URL_REGEX } from '../utils/constants.js';
+import { IMAGE_REGEX } from '../utils/constants.js';
 
 const PostSchema = new mongoose.Schema(
   {
@@ -8,7 +8,7 @@ const PostSchema = new mongoose.Schema(
     postImage: {
       type: String,
       required: true,
-      validate: URL_REGEX,
+      validate: IMAGE_REGEX,
     },
     likes: {
       type: [
