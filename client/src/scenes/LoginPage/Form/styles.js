@@ -35,7 +35,7 @@ const getFormStyles = (palette, isNonMobile) => ({
     m: '2rem 0',
     p: '1rem',
     backgroundColor: palette.primary.main,
-    color: palette.background.alt,
+    color: palette.neutral.dark,
     '&:hover': { color: palette.primary.main },
   },
   changePageButton: {

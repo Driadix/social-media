@@ -1,4 +1,3 @@
-// color design tokens export
 export const colorTokens = {
   grey: {
     0: '#FFFFFF',
@@ -16,16 +15,16 @@ export const colorTokens = {
     1000: '#000000',
   },
   primary: {
-    50: '#E6FBFF',
-    100: '#CCF7FE',
-    200: '#99EEFD',
-    300: '#66E6FC',
-    400: '#33DDFB',
-    500: '#00D5FA',
-    600: '#00A0BC',
-    700: '#006B7D',
-    800: '#00353F',
-    900: '#001519',
+    50: '#F5F7FA',
+    100: '#DDE4EB',
+    200: '#BBD0DE',
+    300: '#99BBD1',
+    400: '#77A6C5',
+    500: '#5580A8',
+    600: '#3E5D7E',
+    700: '#2A3D54',
+    800: '#16242A',
+    900: '#0A0F15',
   },
 };
 

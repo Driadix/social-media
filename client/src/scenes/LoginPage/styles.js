@@ -15,6 +15,7 @@ const getLoginPageStyles = (palette, isNotMobile) => ({
   titleStyles: {
     fontWeight: '500',
     marginBottom: '1.5rem',
+    color: palette.neutral.mediumMain,
   },
 });
 
