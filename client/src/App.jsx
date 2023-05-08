@@ -14,6 +14,7 @@ function App() {
   const themeMode = useSelector((state) => state.app.theme);
   console.log(themeMode);
   const theme = useMemo(() => createTheme(themeSettings(themeMode)), [themeMode]);
+  const isLoggedIn = Boolean(useSelector((state) => state.user.token));
 
   return (
     <div className="app">
@@ -21,9 +22,15 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route path="/signin" element={<LoginPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/profile/:userId" element={<ProfilePage />} />
+            <Route path="/auth" element={<LoginPage />} />
+            <Route
+              path="/"
+              element={isLoggedIn ? <HomePage /> : <Navigate to="/auth" />}
+            />
+            <Route
+              path="/profile/:userId"
+              element={isLoggedIn ? <ProfilePage /> : <Navigate to="/auth" />}
+            />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
