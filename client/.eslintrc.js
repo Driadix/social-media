@@ -25,8 +25,6 @@ module.exports = {
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'no-unused-vars': 'warn',
     'react/prop-types': 'off',
-    'no-restricted-syntax': 'off',
-    'guard-for-in': 'off',
   },
   settings: {
     'import/resolver': {
