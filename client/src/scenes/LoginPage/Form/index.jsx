@@ -1,22 +1,30 @@
 import React from 'react';
-import {
-  Box, Button, TextField, Typography, useTheme, useMediaQuery,
-} from '@mui/material';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { Formik } from 'formik';
+import { useTheme, useMediaQuery } from '@mui/material';
+
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import Dropzone from 'react-dropzone';
 
 import { setLogin } from 'redux/slices/user';
-import FlexBoxStyled from 'components/FlexBoxStyled';
-import {
-  loginInitialValues, registerInitialValues, loginSchema, registerSchema,
-} from 'scenes/LoginPage/Form/utils';
+import { BASE_URL, LOGIN, REGISTER } from 'utils/api';
+
+import LoginForm from 'components/LoginForm';
+import RegisterForm from 'components/RegisterForm';
+import InfoModal from 'components/InfoModal';
 import getFormStyles from './styles';
 
 const Form = () => {
-  const [isLoginPage, setIsLoginPage] = React.useState(false);
+  const [isLoginPage, setIsLoginPage] = React.useState(true);
+  const [openModal, setOpenModal] = React.useState(false);
+  const [modalData, setModalData] = React.useState({
+    modalText: '',
+    isError: false,
+  });
+
+  const handleModal = (data) => {
+    setOpenModal(true);
+    setModalData(data);
+  };
+
   const { palette } = useTheme();
   const isNotMobile = useMediaQuery('(min-width: 600px)');
   const styles = getFormStyles(palette, isNotMobile);
@@ -24,151 +32,90 @@ const Form = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const register = () => {
-    // register function
+  const register = (values, onSubmitProps) => {
+    const formData = new FormData();
+    Object.keys(values).forEach((key) => formData.append(key, values[key]));
+    formData.append('imageLink', values.picture.name);
+
+    fetch(
+      `${BASE_URL}${REGISTER}`,
+      {
+        method: 'POST',
+        body: formData,
+      },
+    )
+      .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+      .then((res) => {
+        handleModal({
+          modalText: 'Регистрация прошла успешно!',
+          isError: false,
+        });
+        setIsLoginPage(true);
+      })
+      .catch((error) => {
+        handleModal({
+          modalText: 'Произошла ошибка при регистрации',
+          isError: true,
+        });
+        console.log('API: ', error);
+      })
+      .finally(() => onSubmitProps.resetForm());
   };
 
-  const login = () => {
-    // login function
+  const login = (values, onSubmitProps) => {
+    fetch(
+      `${BASE_URL}${LOGIN}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values),
+      },
+    )
+      .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+      .then((res) => {
+        if (!res) { Promise.reject(res); }
+        dispatch(setLogin({
+          user: res.user,
+          token: res.token,
+        }));
+        navigate('/');
+      })
+      .catch((error) => {
+        handleModal({
+          modalText: 'Произошла ошибка при входе',
+          isError: true,
+        });
+        console.log('API: ', error);
+      })
+      .finally(() => onSubmitProps.resetForm());
   };
 
-  const handleFormSubmit = async (values, onSubmitProps) => {
-    if (isLoginPage) await login(values, onSubmitProps);
-    if (!isLoginPage) await register(values, onSubmitProps);
+  const handleLoginFormSubmit = async (values, onSubmitProps) => {
+    await login(values, onSubmitProps);
+  };
+
+  const handleRegisterFormSubmit = async (values, onSubmitProps) => {
+    await register(values, onSubmitProps);
   };
 
   return (
-    <Formik
-      onSubmit={handleFormSubmit}
-      initialValues={isLoginPage ? loginInitialValues : registerInitialValues}
-      validationSchema={isLoginPage ? loginSchema : registerSchema}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-        setFieldValue,
-        resetForm,
-      }) => (
-        <form onSubmit={handleSubmit}>
-          <Box sx={styles.formContainer}>
-            {!isLoginPage && (
-              <>
-                <TextField
-                  label="First Name"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.firstName}
-                  name="firstName"
-                  error={Boolean(touched.firstName) && Boolean(errors.firstName)}
-                  helperText={touched.firstName && errors.firstName}
-                />
-                <TextField
-                  label="Last Name"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
-                  name="lastName"
-                  error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                  helperText={touched.lastName && errors.lastName}
-                />
-                <TextField
-                  label="Address"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.address}
-                  name="address"
-                  error={Boolean(touched.address) && Boolean(errors.address)}
-                  helperText={touched.address && errors.address}
-                />
-                <TextField
-                  label="Job"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.job}
-                  name="job"
-                  error={Boolean(touched.job) && Boolean(errors.job)}
-                  helperText={touched.job && errors.job}
-                />
-                <Box sx={styles.dropZoneContainer}>
-                  <Dropzone
-                    acceptedFiles=".jpg,.jpeg,.png"
-                    multiple={false}
-                    onDrop={(acceptedFiles) => setFieldValue('picture', acceptedFiles[0])}
-                  >
-                    {({ getRootProps, getInputProps }) => (
-
-                      <Box
-                      // eslint-disable-next-line react/jsx-props-no-spreading
-                        {...getRootProps()}
-                        sx={styles.dropZoneInner}
-                      >
-
-                        <input
-                        // eslint-disable-next-line react/jsx-props-no-spreading
-                          {...getInputProps()}
-                        />
-                        {!values.picture ? (
-                          <p>Add your profile picture here</p>
-                        ) : (
-                          <FlexBoxStyled justifyContent="space-between">
-                            <Typography>{values.picture.name}</Typography>
-                            <EditOutlinedIcon />
-                          </FlexBoxStyled>
-                        )}
-                      </Box>
-                    )}
-                  </Dropzone>
-                </Box>
-              </>
-            )}
-            <TextField
-              label="Email"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.email}
-              name="email"
-              error={Boolean(touched.email) && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
-            />
-            <TextField
-              label="Password"
-              type="password"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.password}
-              name="password"
-              error={Boolean(touched.password) && Boolean(errors.password)}
-              helperText={touched.password && errors.password}
-            />
-          </Box>
-
-          <Box>
-            <Button
-              fullWidth
-              type="submit"
-              sx={styles.submitButton}
-            >
-              {isLoginPage ? 'Войти' : 'Зарегистрироваться'}
-            </Button>
-            <Typography
-              onClick={() => {
-                setIsLoginPage(!isLoginPage);
-                resetForm();
-              }}
-              sx={styles.changePageButton}
-            >
-              {isLoginPage
-                ? 'Ещё нет аккаунта? Зарегистрируйтесь здесь!'
-                : 'Уже есть аккаунт? Войдите здесь!'}
-            </Typography>
-          </Box>
-        </form>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {isLoginPage ? (
+        <LoginForm
+          styles={styles}
+          setIsLoginPage={setIsLoginPage}
+          handleFormSubmit={handleLoginFormSubmit}
+        />
+      ) : (
+        <RegisterForm
+          styles={styles}
+          setIsLoginPage={setIsLoginPage}
+          handleFormSubmit={handleRegisterFormSubmit}
+        />
       )}
-    </Formik>
+      <InfoModal modalData={modalData} openModal={openModal} setOpenModal={setOpenModal} />
+    </>
   );
 };
 

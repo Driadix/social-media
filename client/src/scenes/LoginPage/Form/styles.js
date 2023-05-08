@@ -3,10 +3,18 @@ const getFormStyles = (palette, isNonMobile) => ({
     display: 'grid',
     gap: '30px',
     gridTemplateColumns: 'repeat(2, 1fr)',
-    '& > div:nth-child(1), & > div:nth-child(2)': {
+    '& > div:nth-of-type(1), & > div:nth-of-type(2)': {
       gridColumn: isNonMobile ? 'span 1' : 'span 2',
     },
-    '& > div:not(:first-child):not(:nth-child(2))': {
+    '& > div:not(:nth-of-type(1)):not(:nth-of-type(2))': {
+      gridColumn: 'span 2',
+    },
+  },
+  formContainerLogin: {
+    display: 'grid',
+    gap: '30px',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    '& > div': {
       gridColumn: 'span 2',
     },
   },
