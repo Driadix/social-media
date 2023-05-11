@@ -5,7 +5,7 @@ import populatePost from '../utils/populatePost.js';
 
 export const createPost = tryCatch(async (req, res) => {
   const { owner, description, postImage } = req.body;
-
+  
   const post = await Post.create({ owner, description, postImage });
   const populatedPost = await post.populate(populatePost());
 

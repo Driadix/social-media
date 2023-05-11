@@ -6,11 +6,12 @@ import {
   likePost,
   dislikePost,
 } from '../controllers/posts.js';
+import multerMiddleware from '../middlewares/multer.js'
 
 const router = Router();
 
 router.get('/', getFeedPosts);
-router.post('/', createPost);
+router.post('/', multerMiddleware.upload('picture'), createPost);
 
 router.get('/:userId', getUserPosts);
 
