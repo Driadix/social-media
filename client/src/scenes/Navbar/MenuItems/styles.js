@@ -1,12 +1,12 @@
 const getMenuItemsStyles = (theme) => ({
-  iconsStyles: {
+  icons: {
     fontSize: '25px',
   },
-  iconsStylesNeutralDark: {
+  iconsNeutralDark: {
     fontSize: '25px',
     color: theme.palette.neutral.dark,
   },
-  selectStyles: {
+  select: {
     backgroundColor: theme.palette.neutral.light,
     width: '150px',
     borderRadius: '0.25rem',

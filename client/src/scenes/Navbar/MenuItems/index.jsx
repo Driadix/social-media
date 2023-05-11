@@ -21,15 +21,15 @@ const MenuItems = () => {
   return (
     <>
       <IconButton onClick={() => dispatch(changeTheme())}>
-        {theme.palette.theme === 'dark' ? <DarkMode sx={styles.iconsStyles} /> : <LightMode sx={styles.iconsStylesNeutralDark} />}
+        {theme.palette.theme === 'dark' ? <DarkMode sx={styles.icons} /> : <LightMode sx={styles.iconsNeutralDark} />}
       </IconButton>
-      <Message sx={styles.iconsStyles} />
-      <Notifications sx={styles.iconsStyles} />
-      <Help sx={styles.iconsStyles} />
+      <Message sx={styles.icons} />
+      <Notifications sx={styles.icons} />
+      <Help sx={styles.icons} />
       <FormControl variant="standard" value={fullName}>
         <Select
           value={fullName}
-          sx={styles.selectStyles}
+          sx={styles.select}
           input={<InputBase />}
         >
           <MenuItem value={fullName}>

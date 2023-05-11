@@ -19,11 +19,11 @@ const Navbar = () => {
   const styles = getNavbarStyles(theme);
 
   return (
-    <FlexBoxStyled sx={styles.mainContainerStyles}>
-      <FlexBoxStyled sx={styles.logoContainerStyles}>
+    <FlexBoxStyled sx={styles.mainContainer}>
+      <FlexBoxStyled sx={styles.logoContainer}>
         <MainLogo />
         {isNotMobile && (
-        <FlexBoxStyled sx={styles.searchContainerStyles}>
+        <FlexBoxStyled sx={styles.searchContainer}>
           <InputBase placeholder="Search" />
           <IconButton>
             <Search />
@@ -33,7 +33,7 @@ const Navbar = () => {
       </FlexBoxStyled>
 
       {isNotMobile ? (
-        <FlexBoxStyled sx={styles.menuDesktopContainerStyles}>
+        <FlexBoxStyled sx={styles.menuDesktopContainer}>
           <MenuItems />
         </FlexBoxStyled>
 
@@ -44,14 +44,14 @@ const Navbar = () => {
       )}
 
       {!isNotMobile && isMobileMenuOpened && (
-        <Box sx={styles.mobileContainerStyles}>
+        <Box sx={styles.mobileContainer}>
           <FlexBoxStyled sx={styles.iconsMobileContainer}>
             <IconButton onClick={() => setisMobileMenuOpened(!isMobileMenuOpened)}>
               <Close />
             </IconButton>
           </FlexBoxStyled>
 
-          <FlexBoxStyled sx={styles.menuMobilesContainerStyles}>
+          <FlexBoxStyled sx={styles.menuMobilesContainer}>
             <MenuItems />
           </FlexBoxStyled>
 

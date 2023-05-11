@@ -13,12 +13,12 @@ const LoginPage = () => {
   return (
     <Box>
 
-      <Box sx={styles.loginHeaderStyles}>
+      <Box sx={styles.loginHeader}>
         <MainLogo isClickable={false} fontSize="32px" />
       </Box>
 
-      <Box sx={styles.formStyles}>
-        <Typography variant="h5" sx={styles.titleStyles}>
+      <Box sx={styles.form}>
+        <Typography variant="h5" sx={styles.title}>
           Welcome to OnMedia, stay on the same Media!
         </Typography>
         <Form />
