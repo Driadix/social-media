@@ -12,7 +12,6 @@ import { themeSettings } from 'theme';
 
 function App() {
   const themeMode = useSelector((state) => state.app.theme);
-  console.log(themeMode);
   const theme = useMemo(() => createTheme(themeSettings(themeMode)), [themeMode]);
   const isLoggedIn = Boolean(useSelector((state) => state.user.token));
 
@@ -28,7 +27,7 @@ function App() {
               element={isLoggedIn ? <HomePage /> : <Navigate to="/auth" />}
             />
             <Route
-              path="/profile/:userId"
+              path="/:userId"
               element={isLoggedIn ? <ProfilePage /> : <Navigate to="/auth" />}
             />
           </Routes>

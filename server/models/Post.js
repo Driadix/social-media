@@ -7,7 +7,7 @@ const PostSchema = new mongoose.Schema(
     description: { type: String },
     postImage: {
       type: String,
-      validate: IMAGE_REGEX,
+      default: '',
     },
     likes: {
       type: [

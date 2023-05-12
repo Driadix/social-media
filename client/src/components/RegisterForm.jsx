@@ -122,7 +122,7 @@ const RegisterForm = ({ styles, setIsLoginPage, handleFormSubmit }) => (
             type="submit"
             sx={styles.submitButton}
           >
-            Зарегистрироваться
+            Register
           </Button>
           <Typography
             onClick={() => {
@@ -131,7 +131,7 @@ const RegisterForm = ({ styles, setIsLoginPage, handleFormSubmit }) => (
             }}
             sx={styles.changePageButton}
           >
-            Уже есть аккаунт? Войдите здесь!
+            Already have an account? Login here!
           </Typography>
         </Box>
       </form>

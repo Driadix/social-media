@@ -75,7 +75,7 @@ const MyPostWidget = ({ imageLink }) => {
       <FlexBoxStyled justifyContent="space-between" gap="1.5rem">
         <UserImage image={imageLink} />
         <InputBase
-          placeholder="Расскажите о своём..."
+          placeholder="Tell about something..."
           onChange={(e) => setPost(e.target.value)}
           value={post}
           sx={styles.tellAboutInput}

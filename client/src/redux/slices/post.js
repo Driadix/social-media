@@ -17,8 +17,11 @@ export const postSlice = createSlice({
         return post;
       });
     },
+    deletePost: (state, action) => {
+      state.posts = state.posts.filter((post) => post._id !== action.payload._id);
+    },
   },
 });
 
-export const { setPosts, setPost } = postSlice.actions;
+export const { setPosts, setPost, deletePost } = postSlice.actions;
 export default postSlice.reducer;

@@ -29,6 +29,14 @@ export const getUserPosts = tryCatch(async (req, res) => {
   res.status(200).send(userPosts);
 });
 
+export const deletePost = tryCatch(async (req, res) => {
+  const post = await Post.findByIdAndRemove(req.params.id,);
+
+  if (!post) throw new NotFoundError('Не найдено поста по данному id');
+
+  res.status(200).send(post);
+});
+
 export const likePost = tryCatch(async (req, res) => {
   const post = await Post.findByIdAndUpdate(
     req.params.id,

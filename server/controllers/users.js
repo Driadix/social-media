@@ -22,7 +22,7 @@ export const getUserFriends = tryCatch(async (req, res) => {
   const friends = await Promise.all(
     user.friendsList.map((friendId) => User.findById(friendId)),
   );
-
+  console.log(friends)
   const formattedFriends = friends.map(
     ({
       _id, firstName, lastName, imageLink, address, job,
@@ -30,7 +30,7 @@ export const getUserFriends = tryCatch(async (req, res) => {
       _id, firstName, lastName, imageLink, address, job,
     }),
   );
-
+  // console.log('!!!!!!', formattedFriends)
   res.status(200).send(formattedFriends);
 });
 
@@ -48,9 +48,7 @@ export const addFriend = tryCatch(async (req, res) => {
   await user.save();
   await friend.save();
 
-  const populatedUser = await user.populate(populateUser());
-
-  res.status(200).send({ populatedUser });
+  res.status(200).send(user);
 });
 
 export const removeFriend = tryCatch(async (req, res) => {
@@ -67,7 +65,5 @@ export const removeFriend = tryCatch(async (req, res) => {
   await user.save();
   await friend.save();
 
-  const populatedUser = await user.populate(populateUser());
-
-  res.status(200).send({ populatedUser });
+  res.status(200).send(user);
 });

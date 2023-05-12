@@ -49,7 +49,7 @@ const LoginForm = ({ styles, setIsLoginPage, handleFormSubmit }) => (
             type="submit"
             sx={styles.submitButton}
           >
-            Войти
+            Login
           </Button>
           <Typography
             onClick={() => {
@@ -58,7 +58,7 @@ const LoginForm = ({ styles, setIsLoginPage, handleFormSubmit }) => (
             }}
             sx={styles.changePageButton}
           >
-            Ещё нет аккаунта? Зарегистрируйтесь здесь!
+            Doesnt have account yet? Register here!
           </Typography>
         </Box>
       </form>

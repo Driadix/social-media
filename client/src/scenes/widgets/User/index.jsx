@@ -23,6 +23,7 @@ const UserWidget = ({ userId, imageLink }) => {
 
   const navigate = useNavigate();
   const token = useSelector((state) => state.user.token);
+  const friendsList = useSelector((state) => state.user.user.friendsList);
 
   const { palette } = useTheme();
 
@@ -48,7 +49,7 @@ const UserWidget = ({ userId, imageLink }) => {
 
   React.useEffect(() => {
     getUserInfo();
-  }, []);
+  }, [friendsList.length]);
 
   if (!user) {
     return null;
