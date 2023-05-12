@@ -15,7 +15,7 @@ import {
 import UserImage from 'components/UserImage';
 import FlexBoxStyled from 'components/FlexBoxStyled';
 import WidgetWrapper from 'components/WidgetWrapper';
-import { BASE_URL } from 'utils/api';
+import { BASE_URL, USER_EP } from 'utils/api';
 import getUserWidgetStyles from './styles';
 
 const UserWidget = ({ userId, imageLink }) => {
@@ -30,7 +30,7 @@ const UserWidget = ({ userId, imageLink }) => {
 
   const getUserInfo = async () => {
     fetch(
-      `${BASE_URL}/users/${userId}`,
+      `${BASE_URL}${USER_EP}/${userId}`,
       {
         method: 'GET',
         headers: { Authorization: `Bearer ${token}` },

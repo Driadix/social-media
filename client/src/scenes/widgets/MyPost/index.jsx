@@ -24,7 +24,7 @@ import Dropzone from 'react-dropzone';
 import UserImage from 'components/UserImage';
 import WidgetWrapper from 'components/WidgetWrapper';
 import { setPosts } from 'redux/slices/post';
-import { BASE_URL } from 'utils/api';
+import { BASE_URL, POST_EP } from 'utils/api';
 import getMyPostStyles from './styles';
 
 const MyPostWidget = ({ imageLink }) => {
@@ -51,7 +51,7 @@ const MyPostWidget = ({ imageLink }) => {
     }
 
     fetch(
-      `${BASE_URL}/posts`,
+      `${BASE_URL}${POST_EP}`,
       {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
@@ -61,7 +61,7 @@ const MyPostWidget = ({ imageLink }) => {
       .then((res) => (res.ok ? res.json() : Promise.reject(res)))
       .then((res) => {
         if (!res) Promise.reject(res);
-        dispatch(setPosts({ res }));
+        dispatch(setPosts({ posts: res }));
         setImage(null);
         setPost('');
       })

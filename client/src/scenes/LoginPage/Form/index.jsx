@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { setLogin } from 'redux/slices/user';
-import { BASE_URL, LOGIN, REGISTER } from 'utils/api';
+import { BASE_URL, LOGIN_EP, REGISTER_EP } from 'utils/api';
 
 import LoginForm from 'components/LoginForm';
 import RegisterForm from 'components/RegisterForm';
@@ -38,7 +38,7 @@ const Form = () => {
     formData.append('imageLink', values.picture.name);
 
     fetch(
-      `${BASE_URL}${REGISTER}`,
+      `${BASE_URL}${REGISTER_EP}`,
       {
         method: 'POST',
         body: formData,
@@ -64,7 +64,7 @@ const Form = () => {
 
   const login = (values, onSubmitProps) => {
     fetch(
-      `${BASE_URL}${LOGIN}`,
+      `${BASE_URL}${LOGIN_EP}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
